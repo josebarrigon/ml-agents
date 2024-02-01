@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 126828113}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.03, y: 0.56, z: -9.63}
-  m_LocalScale: {x: 1, y: 1, z: 9.6789}
+  m_LocalScale: {x: 1, y: 1, z: 9.558882}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1421730421}
@@ -418,7 +418,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379945392}
   m_LocalRotation: {x: 0.22263557, y: -0.032550097, z: 0.0074377367, w: 0.9743298}
-  m_LocalPosition: {x: 0.07, y: 3.77, z: -11.11}
+  m_LocalPosition: {x: 0.16, y: 4.41, z: -12.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -462,7 +462,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545600137}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: -7}
+  m_LocalPosition: {x: 3.07, y: 0.4, z: -5.88}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -598,7 +598,7 @@ MonoBehaviour:
     VectorObservationSize: 6
     NumStackedVectorObservations: 1
     m_ActionSpec:
-      m_NumContinuousActions: 1
+      m_NumContinuousActions: 2
       BranchSizes: 01000000
     VectorActionSize: 
     VectorActionDescriptions: []
@@ -606,7 +606,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: Ball Agent
   TeamId: 0
   m_UseChildSensors: 1

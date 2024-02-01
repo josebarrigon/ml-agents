@@ -12,9 +12,13 @@ public class BallAgent : Agent
     public override void OnActionReceived(ActionBuffers actions)
     {
         float moveZ = actions.ContinuousActions[0];
+        float moveX = actions.ContinuousActions[1];
         float speed = 2f;
 
-        transform.localPosition += new Vector3(0, 0, moveZ) * Time.deltaTime * speed;
+        //CALCULATE REWARD WITH DISTANCE TO TARGET
+        float distanceToTarget = Vector3.Distance(transform.localPosition, target.localPosition);
+        AddReward(-0.01f * distanceToTarget);
+        transform.localPosition += new Vector3(moveX, 0, moveZ) * Time.deltaTime * speed;
 
     }
 
@@ -22,27 +26,36 @@ public class BallAgent : Agent
     {
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         continuousActions[0] = Input.GetAxisRaw("Vertical");
-    }
-
-    public override void OnEpisodeBegin()
-    {
-        transform.localPosition = new Vector3(0f, 0.4f, Random.Range(-8f, 6f)); //ball
-        target.localPosition = new Vector3(0.25f, 0.5f, 7f); //goal
+        continuousActions[1] = Input.GetAxisRaw("Horizontal");
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(target.localPosition);
+        sensor.AddObservation(transform.localPosition); //ball
+        sensor.AddObservation(target.localPosition); //goal
     }
 
-    private void OnTriggerEnter(Collider collider)
+    public override void OnEpisodeBegin()
     {
-        if (collider.gameObject.tag == "goal")
+        transform.localPosition = new Vector3(Random.Range(-3f, 3f), 0.4f, Random.Range(-8f, 6f)); //ball
+        target.localPosition = new Vector3(0.25f, 0.5f, 7f); //goal
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("goal"))
         {
-            AddReward(10f);
+            SetReward(10f);
             EndEpisode();
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("wall"))
+        {
+            SetReward(-5f);
+            EndEpisode();
+        }
+    }
 }
