@@ -1,4 +1,26 @@
 {
+    "Ball Agent": {
+        "checkpoints": [
+            {
+                "steps": 5247,
+                "file_path": "results\\ppo\\Ball Agent\\Ball Agent-5247.onnx",
+                "reward": null,
+                "creation_time": 1706795976.7683597,
+                "auxillary_file_paths": [
+                    "results\\ppo\\Ball Agent\\Ball Agent-5247.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 5247,
+            "file_path": "results\\ppo\\Ball Agent.onnx",
+            "reward": null,
+            "creation_time": 1706795976.7683597,
+            "auxillary_file_paths": [
+                "results\\ppo\\Ball Agent\\Ball Agent-5247.pt"
+            ]
+        }
+    },
     "metadata": {
         "stats_format_version": "0.3.0",
         "mlagents_version": "1.1.0.dev0",

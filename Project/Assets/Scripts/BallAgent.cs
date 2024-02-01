@@ -24,6 +24,12 @@ public class BallAgent : Agent
         continuousActions[0] = Input.GetAxisRaw("Vertical");
     }
 
+    public override void OnEpisodeBegin()
+    {
+        transform.localPosition = new Vector3(0f, 0.4f, Random.Range(-8f, 6f)); //ball
+        target.localPosition = new Vector3(0.25f, 0.5f, 7f); //goal
+    }
+
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.localPosition);
@@ -32,27 +38,11 @@ public class BallAgent : Agent
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Goal")
+        if (collider.gameObject.tag == "goal")
         {
             AddReward(10f);
             EndEpisode();
         }
-        // if (collision.gameObject.tag == "Wall")
-        // {
-        //     AddReward(-5f);
-        //     EndEpisode();
-        // }
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall")
-        {
-            AddReward(-5f);
-            EndEpisode();
-        }
-    }
-
-
 
 }
