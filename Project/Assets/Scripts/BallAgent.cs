@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
+using Unity.MLAgents.Actuators;
+
+public class BallAgent : Agent
+{
+    [SerializeField] private Transform target; //goal
+
+    public override void OnActionReceived(ActionBuffers actions)
+    {
+        float moveZ = actions.ContinuousActions[0];
+        float speed = 2f;
+
+        transform.localPosition += new Vector3(0, 0, moveZ) * Time.deltaTime * speed;
+
+    }
+
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
+        continuousActions[0] = Input.GetAxisRaw("Vertical");
+    }
+
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(target.localPosition);
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Goal")
+        {
+            AddReward(10f);
+            EndEpisode();
+        }
+        // if (collision.gameObject.tag == "Wall")
+        // {
+        //     AddReward(-5f);
+        //     EndEpisode();
+        // }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            AddReward(-5f);
+            EndEpisode();
+        }
+    }
+
+
+
+}
