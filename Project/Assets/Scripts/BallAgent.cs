@@ -7,7 +7,13 @@ using Unity.MLAgents.Actuators;
 
 public class BallAgent : Agent
 {
-    [SerializeField] private Transform target; //goal
+    [SerializeField] private Transform target1; //goal1
+    [SerializeField] private Transform target2; //goal2
+    [SerializeField] private Material color1; 
+    [SerializeField] private Material color2;
+    private Transform pickedTarget;
+
+
 
     public override void OnActionReceived(ActionBuffers actions)
     {
@@ -16,7 +22,7 @@ public class BallAgent : Agent
         float speed = 2f;
 
         //CALCULATE REWARD WITH DISTANCE TO TARGET
-        float distanceToTarget = Vector3.Distance(transform.localPosition, target.localPosition);
+        float distanceToTarget = Vector3.Distance(transform.localPosition, pickedTarget.localPosition);
         AddReward(-0.01f * distanceToTarget);
         transform.localPosition += new Vector3(moveX, 0, moveZ) * Time.deltaTime * speed;
 
@@ -32,21 +38,44 @@ public class BallAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.localPosition); //ball
-        sensor.AddObservation(target.localPosition); //goal
+        sensor.AddObservation(pickedTarget.localPosition); //goal
     }
 
     public override void OnEpisodeBegin()
     {
         transform.localPosition = new Vector3(Random.Range(-3f, 3f), 0.4f, Random.Range(-8f, 6f)); //ball
-        target.localPosition = new Vector3(0.25f, 0.5f, 7f); //goal
+        target1.localPosition = new Vector3(0.25f, 0.5f, 7f); //goal
+        target2.localPosition = new Vector3(0.25f, 0.5f, -7.4f); //goal
+
+        int random = Random.Range(0, 2);
+        if (random == 0)
+        {
+            pickedTarget = target2;
+            transform.GetComponent<Renderer>().material = color1;
+
+        }
+        else
+        {
+            pickedTarget = target1;
+            transform.GetComponent<Renderer>().material = color2;
+        }
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (other.CompareTag("goal"))
+        if (collider.gameObject.tag == "goal")
         {
-            SetReward(10f);
-            EndEpisode();
+            if (collider.gameObject == pickedTarget.gameObject)
+            {
+                AddReward(10f);
+                EndEpisode();
+            }
+            else
+            {
+                AddReward(-30f);
+                EndEpisode();
+            }
         }
     }
 
