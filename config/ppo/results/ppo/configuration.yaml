@@ -1,6 +1,6 @@
 default_settings: null
 behaviors:
-  Ball Agent:
+  Player Agent:
     trainer_type: ppo
     hyperparameters:
       batch_size: 32
