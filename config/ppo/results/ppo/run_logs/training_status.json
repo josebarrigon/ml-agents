@@ -1,26 +1,4 @@
 {
-    "Player Agent": {
-        "checkpoints": [
-            {
-                "steps": 7775,
-                "file_path": "results\\ppo\\Player Agent\\Player Agent-7775.onnx",
-                "reward": -5.0,
-                "creation_time": 1707300975.7206204,
-                "auxillary_file_paths": [
-                    "results\\ppo\\Player Agent\\Player Agent-7775.pt"
-                ]
-            }
-        ],
-        "final_checkpoint": {
-            "steps": 7775,
-            "file_path": "results\\ppo\\Player Agent.onnx",
-            "reward": -5.0,
-            "creation_time": 1707300975.7206204,
-            "auxillary_file_paths": [
-                "results\\ppo\\Player Agent\\Player Agent-7775.pt"
-            ]
-        }
-    },
     "metadata": {
         "stats_format_version": "0.3.0",
         "mlagents_version": "1.1.0.dev0",
